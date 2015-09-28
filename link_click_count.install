@@ -21,21 +21,21 @@ function link_click_count_schema() {
       'url' => array(
         'type' => 'varchar',
         'not null' => TRUE,
-        'length'  => '1000',
+        'length'  => '2048',
       ),
       'nid' => array(
         'type' => 'int',
-        'length' => '150',
+        'length' => '10',
         'not null' => TRUE,
       ),
       'uid' => array(
         'type' => 'int',
-        'length' => '50',
+        'length' => '10',
         'not null' => TRUE,
       ),
       'date' => array(
         'type' => 'int',
-        'length' => '50',
+        'length' => '11',
         'not null' => TRUE,
       ),
 
@@ -60,7 +60,7 @@ function link_click_count_schema() {
 function link_click_count_uninstall() {
   drupal_uninstall_schema('link_click_count');
 
-  $fields = field_info_fields();
+  /*$fields = field_info_fields();
   foreach ($fields as $field => $field_value) {
     $key_exist = array_key_exists("parent_link_field", $field_value["settings"]);
     if ($key_exist) {
@@ -79,8 +79,11 @@ function link_click_count_uninstall() {
       variable_del("link_click_count_checkbox" . $parent_field);
       field_delete_field($field_value["field_name"]);
     }
-  }
+  }*/
 
 }
 
 
+function link_click_count_update_7100() {
+  db_query('ALTER TABLE {link_click_count} CHANGE  url  url LONGTEXT');
+}
